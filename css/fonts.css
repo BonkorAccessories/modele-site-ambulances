@@ -1,0 +1,23 @@
+/* Polices hébergées localement (aucun appel à Google, RGPD).
+   Sous-ensemble latin, polices variables issues de Google Fonts — licence SIL Open Font License 1.1. */
+@font-face {
+  font-family: 'Bricolage Grotesque';
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url(fonts/bricolage-grotesque-latin.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Figtree';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url(fonts/figtree-latin.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(fonts/jetbrains-mono-500-latin.woff2) format('woff2');
+}

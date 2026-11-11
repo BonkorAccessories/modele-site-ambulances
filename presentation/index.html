@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow"><!-- maquette : à retirer à la vraie mise en ligne -->
+  <title>Présentation — Ambulances Horizon</title>
+  <meta name="description" content="Présentation diaporama d'Ambulances Horizon : services, engagements et équipements.">
+  <link rel="stylesheet" href="../css/fonts.css">
+  <style>
+    :root {
+      --primary: #1E40AF; --secondary: #3B82F6; --accent: #EA580C; --on-accent: #0B1220;
+      --night: #050B1F; --night-2: #0B1A44; --bg: #EFF6FF; --ink: #0B1530; --muted: #475569; --border: #BFDBFE;
+      --f-display: 'Bricolage Grotesque', system-ui, sans-serif; --f-body: 'Figtree', system-ui, sans-serif; --f-mono: 'JetBrains Mono', monospace;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; overflow: hidden; background: var(--night); font-family: var(--f-body); }
+    .deck { position: relative; width: 100vw; height: 100svh; }
+    .slide {
+      position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center;
+      padding: clamp(28px, 7vw, 110px); opacity: 0; visibility: hidden;
+      transform: translateX(40px) scale(.98); transition: opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1), visibility .7s;
+      overflow: hidden;
+    }
+    .slide.is-active { opacity: 1; visibility: visible; transform: none; }
+    .slide.is-prev { transform: translateX(-40px) scale(.98); }
+    .dark { background: radial-gradient(120% 90% at 75% 10%, var(--night-2), var(--night) 65%); color: #fff; }
+    .light { background: var(--bg); color: var(--ink); }
+    .blue { background: var(--primary); color: #fff; }
+    .orange { background: var(--accent); color: var(--on-accent); }
+
+    h1, h2, h3 { font-family: var(--f-display); margin: 0; letter-spacing: -0.03em; line-height: 1.02; }
+    h1 { font-size: clamp(2.6rem, 8vw, 7rem); font-weight: 800; }
+    h2 { font-size: clamp(2rem, 5.5vw, 4.6rem); font-weight: 800; margin-bottom: 4vh; max-width: 18ch; }
+    h3 { font-size: clamp(1.2rem, 2vw, 1.7rem); margin-bottom: 8px; }
+    p { font-size: clamp(1rem, 1.6vw, 1.35rem); line-height: 1.55; margin: 0; max-width: 60ch; }
+    .kicker { font: 500 clamp(.72rem, 1vw, .9rem) var(--f-mono); letter-spacing: .16em; text-transform: uppercase; color: var(--accent); margin-bottom: 3vh; display: flex; gap: 12px; align-items: center; }
+    .kicker::before { content: ""; width: 34px; height: 2px; background: currentColor; }
+    .blue .kicker, .orange .kicker { color: inherit; opacity: .8; }
+    .grad { background: linear-gradient(90deg, #93C5FD, #FDBA74); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .sub { color: rgba(255,255,255,.7); margin-top: 3vh; }
+    .light .sub { color: var(--muted); }
+
+    .grid { display: grid; gap: clamp(12px, 2vw, 24px); }
+    .g3 { grid-template-columns: repeat(3, 1fr); }
+    .g2 { grid-template-columns: repeat(2, 1fr); }
+    .tile { padding: clamp(18px, 2.4vw, 34px); border-radius: 24px; background: #fff; border: 1px solid var(--border); }
+    .dark .tile { background: rgba(255,255,255,.05); border-color: rgba(255,255,255,.14); }
+    .tile p { font-size: clamp(.92rem, 1.25vw, 1.08rem); color: var(--muted); }
+    .dark .tile p { color: rgba(255,255,255,.7); }
+    .num { font: 800 clamp(2.4rem, 5vw, 4.4rem)/1 var(--f-display); color: var(--accent); display: block; margin-bottom: 10px; }
+    .tag { display: inline-block; margin-top: 14px; font: 500 .75rem var(--f-mono); text-transform: uppercase; letter-spacing: .08em; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--border); color: var(--primary); }
+
+    .ecg { position: absolute; left: 0; right: 0; bottom: 12vh; height: 120px; opacity: .9; pointer-events: none; }
+    .ecg path { fill: none; stroke: var(--accent); stroke-width: 3; stroke-linejoin: round; filter: drop-shadow(0 0 10px rgba(234,88,12,.8)); stroke-dasharray: 2400; stroke-dashoffset: 2400; }
+    .is-active .ecg path { animation: draw 2.4s .3s cubic-bezier(.65,0,.35,1) forwards; }
+    @keyframes draw { to { stroke-dashoffset: 0; } }
+
+    .is-active .in { animation: rise .9s cubic-bezier(.22,1,.36,1) both; }
+    .is-active .in:nth-child(2) { animation-delay: .08s; } .is-active .in:nth-child(3) { animation-delay: .16s; }
+    .is-active .in:nth-child(4) { animation-delay: .24s; } .is-active .in:nth-child(5) { animation-delay: .32s; }
+    .is-active .in:nth-child(6) { animation-delay: .40s; }
+    @keyframes rise { from { opacity: 0; transform: translateY(28px); } }
+
+    .list { list-style: none; padding: 0; margin: 0; display: grid; gap: 14px; }
+    .list li { display: flex; gap: 16px; align-items: baseline; font-size: clamp(1rem, 1.6vw, 1.3rem); padding-bottom: 14px; border-bottom: 1px solid rgba(255,255,255,.2); }
+    .list b { font-family: var(--f-mono); font-weight: 500; font-size: .8em; min-width: 2.5em; opacity: .7; }
+    .light .list li { border-color: var(--border); }
+
+    .big { font: 800 clamp(3rem, 12vw, 10rem)/.9 var(--f-display); letter-spacing: -0.05em; }
+    .contact-line { font: 600 clamp(1.1rem, 2.2vw, 1.8rem) var(--f-body); margin-top: 2vh; }
+
+    /* barre de contrôle */
+    .ui { position: fixed; left: 0; right: 0; bottom: 0; z-index: 10; display: flex; align-items: center; gap: 16px; padding: 14px clamp(16px, 4vw, 40px); pointer-events: none; }
+    .bar { flex: 1; height: 3px; background: rgba(127,127,127,.25); border-radius: 3px; overflow: hidden; }
+    .bar i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--secondary), var(--accent)); transition: width .6s cubic-bezier(.22,1,.36,1); }
+    .count { font: 500 .85rem var(--f-mono); color: #94A3B8; min-width: 4.5em; text-align: right; }
+    .ui button { pointer-events: auto; width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(148,163,184,.4); background: rgba(15,23,42,.55); color: #fff; cursor: pointer; font-size: 1.1rem; backdrop-filter: blur(8px); }
+    .ui button:hover { background: var(--primary); }
+    .ui button:focus-visible { outline: 3px solid var(--secondary); outline-offset: 2px; }
+    .hint { position: fixed; top: 16px; right: 20px; font: 500 .75rem var(--f-mono); color: #94A3B8; z-index: 10; }
+
+    @media (max-width: 760px) {
+      .g3, .g2 { grid-template-columns: 1fr; }
+      .slide { justify-content: flex-start; padding-top: 60px; padding-bottom: 90px; overflow-y: auto; }
+      .hint { display: none; }
+    }
+    .star { width: clamp(70px, 9vw, 120px); height: auto; margin-bottom: 3vh; }
+    .star__arms { fill: var(--primary); stroke: #fff; stroke-width: 3; stroke-linejoin: round; }
+    .star__rod { fill: none; stroke: #fff; stroke-width: 4; stroke-linecap: round; }
+    .star__rod circle { fill: #fff; stroke: none; }
+    .is-active .star { animation: spin 1.4s cubic-bezier(.22,1,.36,1) both; }
+    @keyframes spin { from { transform: rotate(-120deg) scale(.4); opacity: 0; } }
+  </style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+  <!-- 1. Titre -->
+  <section class="slide dark" aria-label="Diapositive 1">
+    <svg viewBox="0 0 100 100" class="star" aria-hidden="true"><g class="star__arms"><rect x="38" y="4" width="24" height="92" rx="3"/><rect x="38" y="4" width="24" height="92" rx="3" transform="rotate(60 50 50)"/><rect x="38" y="4" width="24" height="92" rx="3" transform="rotate(120 50 50)"/></g><g class="star__rod"><path d="M50 20v62"/><path d="M43 30c0-4 14-4 14 1s-14 6-14 11 14 6 14 11-14 6-14 11 10 5 13 2"/><circle cx="57" cy="29" r="2.4"/></g></svg>
+    <p class="kicker in">Présentation · Transport sanitaire</p>
+    <h1 class="in">Ambulances<br><span class="grad">Horizon</span></h1>
+    <p class="sub in">Ambulance · VSL · Taxi conventionné — Créteil, Val-de-Marne</p>
+    <svg class="ecg" viewBox="0 0 1600 120" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 70 H520 L545 70 L565 30 L590 110 L612 20 L632 70 H1060 L1085 70 L1105 30 L1130 110 L1152 20 L1172 70 H1600"/>
+    </svg>
+  </section>
+
+  <!-- 2. Qui sommes-nous -->
+  <section class="slide light" aria-label="Diapositive 2">
+    <p class="kicker in">Qui sommes-nous</p>
+    <h2 class="in">Une entreprise de proximité au cœur du Val-de-Marne.</h2>
+    <p class="in" style="color:var(--muted)">Installée au 10 avenue des Lilas à Créteil, Ambulances Horizon conduit les patients vers leurs soins avec ponctualité, confort et bienveillance, de jour comme de nuit.</p>
+  </section>
+
+  <!-- 3. Chiffres clés -->
+  <section class="slide dark" aria-label="Diapositive 3">
+    <p class="kicker in">En bref</p>
+    <h2 class="in">Toujours disponibles.</h2>
+    <div class="grid g3">
+      <div class="tile in"><span class="num">24h/24</span><p>Une permanence assurée jour et nuit.</p></div>
+      <div class="tile in"><span class="num">7j/7</span><p>Week-ends et jours fériés compris.</p></div>
+      <div class="tile in"><span class="num">3</span><p>Modes de transport adaptés à chaque patient.</p></div>
+    </div>
+  </section>
+
+  <!-- 4. Services -->
+  <section class="slide light" aria-label="Diapositive 4">
+    <p class="kicker in">Nos services</p>
+    <h2 class="in">Le bon véhicule pour chaque situation.</h2>
+    <div class="grid g3">
+      <div class="tile in"><h3>Ambulance</h3><p>Transport allongé ou sous surveillance, programmé ou urgent, avec deux ambulanciers diplômés.</p><span class="tag">Allongé</span></div>
+      <div class="tile in"><h3>VSL</h3><p>Véhicule sanitaire léger pour un à trois patients assis, autonomes ou peu dépendants.</p><span class="tag">Assis</span></div>
+      <div class="tile in"><h3>Taxi conventionné</h3><p>Transport assis remboursé par l'Assurance Maladie sur prescription médicale.</p><span class="tag">CPAM</span></div>
+    </div>
+  </section>
+
+  <!-- 5. Trajets -->
+  <section class="slide blue" aria-label="Diapositive 5">
+    <p class="kicker in">Prises en charge</p>
+    <h2 class="in">Tous vos déplacements médicaux.</h2>
+    <ul class="list in">
+      <li><b>01</b>Transferts entre établissements de santé</li>
+      <li><b>02</b>Consultations, examens et rendez-vous spécialisés</li>
+      <li><b>03</b>Entrées et sorties d'hospitalisation</li>
+      <li><b>04</b>Dialyse, chimiothérapie, radiothérapie</li>
+      <li><b>05</b>Transports urgents 24h/24</li>
+      <li><b>06</b>Permissions de sortie</li>
+    </ul>
+  </section>
+
+  <!-- 6. Valeurs -->
+  <section class="slide light" aria-label="Diapositive 6">
+    <p class="kicker in">Nos engagements</p>
+    <h2 class="in">Quatre valeurs, à chaque trajet.</h2>
+    <div class="grid g2">
+      <div class="tile in"><h3>Proximité</h3><p>Une équipe locale qui connaît les établissements et les accès du secteur.</p></div>
+      <div class="tile in"><h3>Écoute</h3><p>Expliquer, rassurer, respecter le rythme de chaque patient.</p></div>
+      <div class="tile in"><h3>Compétence</h3><p>Des ambulanciers diplômés, formés aux gestes d'urgence.</p></div>
+      <div class="tile in"><h3>Sécurité</h3><p>Véhicules entretenus, désinfectés et conduite souple.</p></div>
+    </div>
+  </section>
+
+  <!-- 7. Équipements -->
+  <section class="slide dark" aria-label="Diapositive 7">
+    <p class="kicker in">Flotte &amp; équipements</p>
+    <h2 class="in">Équipés pour votre sécurité.</h2>
+    <div class="grid g2">
+      <div class="tile in"><h3>Défibrillateur</h3><p>Dans chaque véhicule sanitaire.</p></div>
+      <div class="tile in"><h3>Premiers secours</h3><p>Oxygène, kit de soins, brancard.</p></div>
+      <div class="tile in"><h3>Climatisation</h3><p>Un confort constant toute l'année.</p></div>
+      <div class="tile in"><h3>Hygiène</h3><p>Désinfection après chaque transport.</p></div>
+    </div>
+  </section>
+
+  <!-- 8. Le site -->
+  <section class="slide light" aria-label="Diapositive 8">
+    <p class="kicker in">Le nouveau site</p>
+    <h2 class="in">Une expérience web immersive.</h2>
+    <div class="grid g3">
+      <div class="tile in"><h3>Hero animé</h3><p>Tracé ECG en temps réel, réseau de particules et halo qui suit la souris.</p></div>
+      <div class="tile in"><h3>Scroll cinématique</h3><p>Défilement fluide, trajets en horizontal, cartes empilées et compteurs animés.</p></div>
+      <div class="tile in"><h3>Lisible partout</h3><p>Textes contrastés, navigation au clavier avec lien « Aller au contenu », mise en page pensée d'abord pour le mobile.</p></div>
+    </div>
+  </section>
+
+  <!-- 9. Contact -->
+  <section class="slide orange" aria-label="Diapositive 9">
+    <p class="kicker in">Contact</p>
+    <div class="big in">Horizon</div>
+    <p class="contact-line in">10 avenue des Lilas<br>94000 Créteil</p>
+    <p class="contact-line in">01 99 00 12 34 · 24h/24 · 7j/7</p>
+  </section>
+</div>
+
+<div class="hint">← → pour naviguer · F plein écran</div>
+<div class="ui">
+  <button id="prev" aria-label="Diapositive précédente">←</button>
+  <div class="bar"><i></i></div>
+  <span class="count" aria-live="polite"></span>
+  <button id="next" aria-label="Diapositive suivante">→</button>
+</div>
+
+<script>
+  (() => {
+    const slides = [...document.querySelectorAll('.slide')];
+    const bar = document.querySelector('.bar i');
+    const count = document.querySelector('.count');
+    let i = Math.min(Math.max(parseInt(location.hash.slice(1)) - 1 || 0, 0), slides.length - 1);
+
+    function go(n) {
+      i = Math.max(0, Math.min(slides.length - 1, n));
+      slides.forEach((s, k) => {
+        s.classList.toggle('is-active', k === i);
+        s.classList.toggle('is-prev', k < i);
+        s.setAttribute('aria-hidden', k !== i);
+      });
+      bar.style.width = ((i + 1) / slides.length * 100) + '%';
+      count.textContent = `${i + 1} / ${slides.length}`;
+      history.replaceState(null, '', '#' + (i + 1));
+    }
+
+    document.getElementById('prev').onclick = () => go(i - 1);
+    document.getElementById('next').onclick = () => go(i + 1);
+    addEventListener('keydown', e => {
+      if (e.key === ' ' && e.target.closest('button, a')) return; // Espace active le bouton/lien ciblé
+      if (['ArrowRight', 'PageDown', ' '].includes(e.key)) { e.preventDefault(); go(i + 1); }
+      if (['ArrowLeft', 'PageUp'].includes(e.key)) { e.preventDefault(); go(i - 1); }
+      if (e.key === 'Home') go(0);
+      if (e.key === 'End') go(slides.length - 1);
+      if (e.key.toLowerCase() === 'f') document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen?.();
+    });
+    let x0 = null;
+    addEventListener('touchstart', e => x0 = e.touches[0].clientX, { passive: true });
+    addEventListener('touchend', e => {
+      if (x0 === null) return;
+      const dx = e.changedTouches[0].clientX - x0;
+      if (Math.abs(dx) > 50) go(i + (dx < 0 ? 1 : -1));
+      x0 = null;
+    });
+    go(i);
+  })();
+</script>
+</body>
+</html>
